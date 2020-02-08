@@ -17,6 +17,7 @@ tokenDecoder =
 type alias User =
     { login : String
     , name : String
+    , avatar : String
     , repos : List Repository
     }
 
@@ -37,9 +38,10 @@ type alias Language =
 
 userDecoder : Decoder User
 userDecoder =
-    D.map3 User
+    D.map4 User
         (D.field "login" D.string)
         (D.field "name" D.string)
+        (D.field "avatarUrl" D.string)
         (D.at [ "repositories", "nodes" ] (D.list repoDecoder))
 
 
@@ -68,6 +70,7 @@ getUserInfo msg (Token t) =
       viewer {
         login
         name
+        avatarUrl
         repositories(first: 100, orderBy: {field: STARGAZERS, direction: DESC}, ownerAffiliations: [OWNER], isFork: false) {
           nodes {
             name

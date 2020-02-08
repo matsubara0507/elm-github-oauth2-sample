@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.eY,
-		impl.fN,
-		impl.fB,
+		impl.eZ,
+		impl.fO,
+		impl.fC,
 		function() { return function() {} }
 	);
 });
@@ -3928,11 +3928,11 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.eY,
-		impl.fN,
-		impl.fB,
+		impl.eZ,
+		impl.fO,
+		impl.fC,
 		function(sendToApp, initialModel) {
-			var view = impl.fO;
+			var view = impl.fP;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3964,12 +3964,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.eY,
-		impl.fN,
-		impl.fB,
+		impl.eZ,
+		impl.fO,
+		impl.fC,
 		function(sendToApp, initialModel) {
 			var divertHrefToApp = impl.cP && impl.cP(sendToApp)
-			var view = impl.fO;
+			var view = impl.fP;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3977,12 +3977,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.ew);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.ex);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.fF) && (_VirtualDom_doc.title = title = doc.fF);
+				(title !== doc.fG) && (_VirtualDom_doc.title = title = doc.fG);
 			});
 		}
 	);
@@ -4038,8 +4038,8 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.fc;
-	var onUrlRequest = impl.fd;
+	var onUrlChange = impl.fd;
+	var onUrlRequest = impl.fe;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
@@ -4069,13 +4069,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		eY: function(flags)
+		eZ: function(flags)
 		{
-			return A3(impl.eY, flags, _Browser_getUrl(), key);
+			return A3(impl.eZ, flags, _Browser_getUrl(), key);
 		},
+		fP: impl.fP,
 		fO: impl.fO,
-		fN: impl.fN,
-		fB: impl.fB
+		fC: impl.fC
 	});
 }
 
@@ -4141,17 +4141,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { eT: 'hidden', eA: 'visibilitychange' }
+		? { eU: 'hidden', eB: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { eT: 'mozHidden', eA: 'mozvisibilitychange' }
+		? { eU: 'mozHidden', eB: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { eT: 'msHidden', eA: 'msvisibilitychange' }
+		? { eU: 'msHidden', eB: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { eT: 'webkitHidden', eA: 'webkitvisibilitychange' }
-		: { eT: 'hidden', eA: 'visibilitychange' };
+		? { eU: 'webkitHidden', eB: 'webkitvisibilitychange' }
+		: { eU: 'hidden', eB: 'visibilitychange' };
 }
 
 
@@ -4316,7 +4316,7 @@ function _Browser_getElement(id)
 				c4: _Browser_doc.documentElement.clientWidth,
 				b6: _Browser_doc.documentElement.clientHeight
 			},
-			eJ: {
+			eK: {
 				en: x + rect.left,
 				ep: y + rect.top,
 				c4: rect.width,
@@ -4365,25 +4365,25 @@ var _Http_toTask = F3(function(router, toTask, request)
 	return _Scheduler_binding(function(callback)
 	{
 		function done(response) {
-			callback(toTask(request.eM.a(response)));
+			callback(toTask(request.eN.a(response)));
 		}
 
 		var xhr = new XMLHttpRequest();
 		xhr.addEventListener('error', function() { done($elm$http$Http$NetworkError_); });
 		xhr.addEventListener('timeout', function() { done($elm$http$Http$Timeout_); });
-		xhr.addEventListener('load', function() { done(_Http_toResponse(request.eM.b, xhr)); });
-		$elm$core$Maybe$isJust(request.fM) && _Http_track(router, xhr, request.fM.a);
+		xhr.addEventListener('load', function() { done(_Http_toResponse(request.eN.b, xhr)); });
+		$elm$core$Maybe$isJust(request.fN) && _Http_track(router, xhr, request.fN.a);
 
 		try {
-			xhr.open(request.e5, request.ei, true);
+			xhr.open(request.e6, request.ei, true);
 		} catch (e) {
 			return done($elm$http$Http$BadUrl_(request.ei));
 		}
 
 		_Http_configureRequest(xhr, request);
 
-		request.ew.a && xhr.setRequestHeader('Content-Type', request.ew.a);
-		xhr.send(request.ew.b);
+		request.ex.a && xhr.setRequestHeader('Content-Type', request.ex.a);
+		xhr.send(request.ex.b);
 
 		return function() { xhr.c = true; xhr.abort(); };
 	});
@@ -4394,12 +4394,12 @@ var _Http_toTask = F3(function(router, toTask, request)
 
 function _Http_configureRequest(xhr, request)
 {
-	for (var headers = request.eR; headers.b; headers = headers.b) // WHILE_CONS
+	for (var headers = request.eS; headers.b; headers = headers.b) // WHILE_CONS
 	{
 		xhr.setRequestHeader(headers.a.a, headers.a.b);
 	}
-	xhr.timeout = request.fE.a || 0;
-	xhr.responseType = request.eM.d;
+	xhr.timeout = request.fF.a || 0;
+	xhr.responseType = request.eN.d;
 	xhr.withCredentials = request.es;
 }
 
@@ -4422,9 +4422,9 @@ function _Http_toMetadata(xhr)
 {
 	return {
 		ei: xhr.responseURL,
-		fx: xhr.status,
-		fy: xhr.statusText,
-		eR: _Http_parseHeaders(xhr.getAllResponseHeaders())
+		fy: xhr.status,
+		fz: xhr.statusText,
+		eS: _Http_parseHeaders(xhr.getAllResponseHeaders())
 	};
 }
 
@@ -4519,14 +4519,14 @@ function _Http_track(router, xhr, tracker)
 	xhr.upload.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Sending({
-			ft: event.loaded,
+			fu: event.loaded,
 			d8: event.total
 		}))));
 	});
 	xhr.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Receiving({
-			fj: event.loaded,
+			fk: event.loaded,
 			d8: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
 		}))));
 	});
@@ -4576,8 +4576,8 @@ var _Regex_never = /.^/;
 var _Regex_fromStringWith = F2(function(options, string)
 {
 	var flags = 'g';
-	if (options.e6) { flags += 'm'; }
-	if (options.ey) { flags += 'i'; }
+	if (options.e7) { flags += 'm'; }
+	if (options.ez) { flags += 'i'; }
 
 	try
 	{
@@ -6118,7 +6118,7 @@ var $elm$http$Http$resolve = F2(
 			case 3:
 				var metadata = response.a;
 				return $elm$core$Result$Err(
-					$elm$http$Http$BadStatus(metadata.fx));
+					$elm$http$Http$BadStatus(metadata.fy));
 			default:
 				var body = response.b;
 				return A2(
@@ -6213,7 +6213,7 @@ var $elm$http$Http$updateReqs = F3(
 					return A2(
 						$elm$core$Task$andThen,
 						function (pid) {
-							var _v4 = req.fM;
+							var _v4 = req.fN;
 							if (_v4.$ === 1) {
 								return A3($elm$http$Http$updateReqs, router, otherCmds, reqs);
 							} else {
@@ -6301,12 +6301,12 @@ var $elm$http$Http$cmdMap = F2(
 			return $elm$http$Http$Request(
 				{
 					es: r.es,
-					ew: r.ew,
-					eM: A2(_Http_mapExpect, func, r.eM),
-					eR: r.eR,
-					e5: r.e5,
-					fE: r.fE,
-					fM: r.fM,
+					ex: r.ex,
+					eN: A2(_Http_mapExpect, func, r.eN),
+					eS: r.eS,
+					e6: r.e6,
+					fF: r.fF,
+					fN: r.fN,
 					ei: r.ei
 				});
 		}
@@ -6330,30 +6330,29 @@ var $elm$http$Http$subscription = _Platform_leaf('Http');
 var $elm$http$Http$request = function (r) {
 	return $elm$http$Http$command(
 		$elm$http$Http$Request(
-			{es: false, ew: r.ew, eM: r.eM, eR: r.eR, e5: r.e5, fE: r.fE, fM: r.fM, ei: r.ei}));
+			{es: false, ex: r.ex, eN: r.eN, eS: r.eS, e6: r.e6, fF: r.fF, fN: r.fN, ei: r.ei}));
 };
 var $elm$json$Json$Encode$string = _Json_wrap;
-var $author$project$GitHub$User = F3(
-	function (login, name, repos) {
-		return {e1: login, cu: name, fm: repos};
+var $author$project$GitHub$User = F4(
+	function (login, name, avatar, repos) {
+		return {eu: avatar, e2: login, cu: name, fn: repos};
 	});
 var $elm$json$Json$Decode$list = _Json_decodeList;
-var $elm$json$Json$Decode$map3 = _Json_map3;
+var $elm$json$Json$Decode$map4 = _Json_map4;
 var $author$project$GitHub$Repository = F4(
 	function (name, url, language, star) {
-		return {e$: language, cu: name, fv: star, ei: url};
+		return {e0: language, cu: name, fw: star, ei: url};
 	});
 var $elm$json$Json$Decode$int = _Json_decodeInt;
 var $author$project$GitHub$Language = F2(
 	function (name, color) {
-		return {eC: color, cu: name};
+		return {eD: color, cu: name};
 	});
 var $author$project$GitHub$languageDecoder = A3(
 	$elm$json$Json$Decode$map2,
 	$author$project$GitHub$Language,
 	A2($elm$json$Json$Decode$field, 'name', $elm$json$Json$Decode$string),
 	A2($elm$json$Json$Decode$field, 'color', $elm$json$Json$Decode$string));
-var $elm$json$Json$Decode$map4 = _Json_map4;
 var $elm$json$Json$Decode$null = _Json_decodeNull;
 var $elm$json$Json$Decode$oneOf = _Json_oneOf;
 var $elm$json$Json$Decode$nullable = function (decoder) {
@@ -6378,11 +6377,12 @@ var $author$project$GitHub$repoDecoder = A5(
 		_List_fromArray(
 			['stargazers', 'totalCount']),
 		$elm$json$Json$Decode$int));
-var $author$project$GitHub$userDecoder = A4(
-	$elm$json$Json$Decode$map3,
+var $author$project$GitHub$userDecoder = A5(
+	$elm$json$Json$Decode$map4,
 	$author$project$GitHub$User,
 	A2($elm$json$Json$Decode$field, 'login', $elm$json$Json$Decode$string),
 	A2($elm$json$Json$Decode$field, 'name', $elm$json$Json$Decode$string),
+	A2($elm$json$Json$Decode$field, 'avatarUrl', $elm$json$Json$Decode$string),
 	A2(
 		$elm$json$Json$Decode$at,
 		_List_fromArray(
@@ -6391,7 +6391,7 @@ var $author$project$GitHub$userDecoder = A4(
 var $author$project$GitHub$getUserInfo = F2(
 	function (msg, _v0) {
 		var t = _v0;
-		var query = '\n    query {\n      viewer {\n        login\n        name\n        repositories(first: 100, orderBy: {field: STARGAZERS, direction: DESC}, ownerAffiliations: [OWNER], isFork: false) {\n          nodes {\n            name\n            url\n            primaryLanguage {\n              name\n              color\n            }\n            stargazers {\n              totalCount\n            }\n          }\n        }\n      }\n    }\n    ';
+		var query = '\n    query {\n      viewer {\n        login\n        name\n        avatarUrl\n        repositories(first: 100, orderBy: {field: STARGAZERS, direction: DESC}, ownerAffiliations: [OWNER], isFork: false) {\n          nodes {\n            name\n            url\n            primaryLanguage {\n              name\n              color\n            }\n            stargazers {\n              totalCount\n            }\n          }\n        }\n      }\n    }\n    ';
 		var decoder = A2(
 			$elm$json$Json$Decode$map,
 			$elm$core$Basics$identity,
@@ -6402,7 +6402,7 @@ var $author$project$GitHub$getUserInfo = F2(
 				$author$project$GitHub$userDecoder));
 		return $elm$http$Http$request(
 			{
-				ew: $elm$http$Http$jsonBody(
+				ex: $elm$http$Http$jsonBody(
 					$elm$json$Json$Encode$object(
 						_List_fromArray(
 							[
@@ -6410,14 +6410,14 @@ var $author$project$GitHub$getUserInfo = F2(
 								'query',
 								$elm$json$Json$Encode$string(query))
 							]))),
-				eM: A2($elm$http$Http$expectJson, msg, decoder),
-				eR: _List_fromArray(
+				eN: A2($elm$http$Http$expectJson, msg, decoder),
+				eS: _List_fromArray(
 					[
 						A2($elm$http$Http$header, 'Authorization', 'token ' + t)
 					]),
-				e5: 'POST',
-				fE: $elm$core$Maybe$Nothing,
-				fM: $elm$core$Maybe$Nothing,
+				e6: 'POST',
+				fF: $elm$core$Maybe$Nothing,
+				fN: $elm$core$Maybe$Nothing,
 				ei: 'https://api.github.com/graphql'
 			});
 	});
@@ -6573,6 +6573,120 @@ var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $author$project$Main$SignIn = {$: 2};
 var $elm$html$Html$button = _VirtualDom_node('button');
+var $capitalist$elm_octicons$Octicons$defaultOptions = {de: $elm$core$Maybe$Nothing, eD: 'black', bA: 'evenodd', b6: 16, dH: $elm$core$Maybe$Nothing, eb: $elm$core$Maybe$Nothing, c4: 16};
+var $capitalist$elm_octicons$Octicons$markGithubPath = 'M8,0 C3.58,0 0,3.58 0,8 C0,11.54 2.29,14.53 5.47,15.59 C5.87,15.66 6.02,15.42 6.02,15.21 C6.02,15.02 6.01,14.39 6.01,13.72 C4,14.09 3.48,13.23 3.32,12.78 C3.23,12.55 2.84,11.84 2.5,11.65 C2.22,11.5 1.82,11.13 2.49,11.12 C3.12,11.11 3.57,11.7 3.72,11.94 C4.44,13.15 5.59,12.81 6.05,12.6 C6.12,12.08 6.33,11.73 6.56,11.53 C4.78,11.33 2.92,10.64 2.92,7.58 C2.92,6.71 3.23,5.99 3.74,5.43 C3.66,5.23 3.38,4.41 3.82,3.31 C3.82,3.31 4.49,3.1 6.02,4.13 C6.66,3.95 7.34,3.86 8.02,3.86 C8.7,3.86 9.38,3.95 10.02,4.13 C11.55,3.09 12.22,3.31 12.22,3.31 C12.66,4.41 12.38,5.23 12.3,5.43 C12.81,5.99 13.12,6.7 13.12,7.58 C13.12,10.65 11.25,11.33 9.47,11.53 C9.76,11.78 10.01,12.26 10.01,13.01 C10.01,14.08 10,14.94 10,15.21 C10,15.42 10.15,15.67 10.55,15.59 C13.71,14.53 16,11.53 16,8 C16,3.58 12.42,0 8,0 L8,0 Z';
+var $elm$svg$Svg$Attributes$d = _VirtualDom_attribute('d');
+var $elm$svg$Svg$Attributes$fill = _VirtualDom_attribute('fill');
+var $elm$svg$Svg$Attributes$fillRule = _VirtualDom_attribute('fill-rule');
+var $elm$svg$Svg$Attributes$class = _VirtualDom_attribute('class');
+var $elm$core$List$append = F2(
+	function (xs, ys) {
+		if (!ys.b) {
+			return xs;
+		} else {
+			return A3($elm$core$List$foldr, $elm$core$List$cons, ys, xs);
+		}
+	});
+var $elm$core$List$concat = function (lists) {
+	return A3($elm$core$List$foldr, $elm$core$List$append, _List_Nil, lists);
+};
+var $elm$svg$Svg$Attributes$height = _VirtualDom_attribute('height');
+var $elm$svg$Svg$Attributes$style = _VirtualDom_attribute('style');
+var $elm$svg$Svg$trustedNode = _VirtualDom_nodeNS('http://www.w3.org/2000/svg');
+var $elm$svg$Svg$svg = $elm$svg$Svg$trustedNode('svg');
+var $elm$svg$Svg$Attributes$version = _VirtualDom_attribute('version');
+var $elm$svg$Svg$Attributes$viewBox = _VirtualDom_attribute('viewBox');
+var $elm$svg$Svg$Attributes$width = _VirtualDom_attribute('width');
+var $elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (!maybe.$) {
+			var value = maybe.a;
+			return value;
+		} else {
+			return _default;
+		}
+	});
+var $capitalist$elm_octicons$Octicons$Internal$iconSVG = F5(
+	function (viewBox, name, options, attributes, children) {
+		var style = function () {
+			var _v2 = options.eb;
+			if (_v2.$ === 1) {
+				return _List_Nil;
+			} else {
+				var s = _v2.a;
+				return _List_fromArray(
+					[s]);
+			}
+		}();
+		var margin = function () {
+			var _v1 = options.dH;
+			if (_v1.$ === 1) {
+				return _List_Nil;
+			} else {
+				var m = _v1.a;
+				return _List_fromArray(
+					['margin: ' + m]);
+			}
+		}();
+		var styles = function () {
+			var _v0 = $elm$core$List$concat(
+				_List_fromArray(
+					[style, margin]));
+			if (!_v0.b) {
+				return _List_Nil;
+			} else {
+				var lst = _v0;
+				return _List_fromArray(
+					[
+						$elm$svg$Svg$Attributes$style(
+						A2($elm$core$String$join, ';', lst))
+					]);
+			}
+		}();
+		return A2(
+			$elm$svg$Svg$svg,
+			$elm$core$List$concat(
+				_List_fromArray(
+					[
+						_List_fromArray(
+						[
+							$elm$svg$Svg$Attributes$version('1.1'),
+							$elm$svg$Svg$Attributes$class(
+							A2($elm$core$Maybe$withDefault, 'octicon ' + name, options.de)),
+							$elm$svg$Svg$Attributes$width(
+							$elm$core$String$fromInt(options.c4)),
+							$elm$svg$Svg$Attributes$height(
+							$elm$core$String$fromInt(options.b6)),
+							$elm$svg$Svg$Attributes$viewBox(viewBox)
+						]),
+						attributes,
+						styles
+					])),
+			children);
+	});
+var $elm$svg$Svg$path = $elm$svg$Svg$trustedNode('path');
+var $capitalist$elm_octicons$Octicons$pathIconWithOptions = F4(
+	function (path, viewBox, octiconName, options) {
+		return A5(
+			$capitalist$elm_octicons$Octicons$Internal$iconSVG,
+			viewBox,
+			octiconName,
+			options,
+			_List_Nil,
+			_List_fromArray(
+				[
+					A2(
+					$elm$svg$Svg$path,
+					_List_fromArray(
+						[
+							$elm$svg$Svg$Attributes$d(path),
+							$elm$svg$Svg$Attributes$fillRule(options.bA),
+							$elm$svg$Svg$Attributes$fill(options.eD)
+						]),
+					_List_Nil)
+				]));
+	});
+var $capitalist$elm_octicons$Octicons$markGithub = A3($capitalist$elm_octicons$Octicons$pathIconWithOptions, $capitalist$elm_octicons$Octicons$markGithubPath, '0 0 16 16', 'markGithub');
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 0, a: a};
 };
@@ -6590,6 +6704,13 @@ var $elm$html$Html$Events$onClick = function (msg) {
 		'click',
 		$elm$json$Json$Decode$succeed(msg));
 };
+var $capitalist$elm_octicons$Octicons$size = F2(
+	function (value, options) {
+		return _Utils_update(
+			options,
+			{b6: value, c4: value});
+	});
+var $elm$html$Html$span = _VirtualDom_node('span');
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
@@ -6606,13 +6727,24 @@ var $author$project$Main$signinButton = function (_v0) {
 				$elm$html$Html$button,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class('btn btn-large btn-outline-blue mr-2'),
+						$elm$html$Html$Attributes$class('btn btn-large btn-outline-blue mr-2 text-center'),
 						$elm$html$Html$Attributes$type_('button'),
 						$elm$html$Html$Events$onClick($author$project$Main$SignIn)
 					]),
 				_List_fromArray(
 					[
-						$elm$html$Html$text('Sign in with GitHub')
+						$elm$html$Html$text('Sign in with GitHub'),
+						A2(
+						$elm$html$Html$span,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('ml-2')
+							]),
+						_List_fromArray(
+							[
+								$capitalist$elm_octicons$Octicons$markGithub(
+								A2($capitalist$elm_octicons$Octicons$size, 22, $capitalist$elm_octicons$Octicons$defaultOptions))
+							]))
 					]))
 			]));
 };
@@ -7228,15 +7360,6 @@ var $elm$core$Maybe$map = F2(
 			return $elm$core$Maybe$Nothing;
 		}
 	});
-var $elm$core$Maybe$withDefault = F2(
-	function (_default, maybe) {
-		if (!maybe.$) {
-			var value = maybe.a;
-			return value;
-		} else {
-			return _default;
-		}
-	});
 var $folkertdev$one_true_path_experiment$LowLevel$Command$updateCursorState = F2(
 	function (drawto, state) {
 		var noControlPoint = function (currentState) {
@@ -7722,7 +7845,7 @@ var $gampleman$elm_visualization$Shape$Pie$centroid = function (arcData) {
 		$elm$core$Basics$sin(a) * r);
 };
 var $gampleman$elm_visualization$Shape$centroid = $gampleman$elm_visualization$Shape$Pie$centroid;
-var $gampleman$elm_visualization$Shape$defaultPieConfig = {bx: 0, b4: 2 * $elm$core$Basics$pi, bb: 0, bf: 100, bK: 0, cz: 0, fu: $elm$core$Basics$compare, bj: 0, ej: $elm$core$Basics$identity};
+var $gampleman$elm_visualization$Shape$defaultPieConfig = {bx: 0, b4: 2 * $elm$core$Basics$pi, bb: 0, bf: 100, bK: 0, cz: 0, fv: $elm$core$Basics$compare, bj: 0, ej: $elm$core$Basics$identity};
 var $elm$virtual_dom$VirtualDom$attribute = F2(
 	function (key, value) {
 		return A2(
@@ -7772,9 +7895,6 @@ var $elm_community$typed_svg$TypedSvg$Attributes$dy = function (length) {
 		'dy',
 		$elm_community$typed_svg$TypedSvg$TypesToStrings$lengthToString(length));
 };
-var $elm$svg$Svg$Attributes$d = _VirtualDom_attribute('d');
-var $elm$svg$Svg$trustedNode = _VirtualDom_nodeNS('http://www.w3.org/2000/svg');
-var $elm$svg$Svg$path = $elm$svg$Svg$trustedNode('path');
 var $folkertdev$elm_deque$Deque$empty = $folkertdev$elm_deque$Internal$empty;
 var $folkertdev$one_true_path_experiment$LowLevel$Command$merge = F2(
 	function (instruction1, instruction2) {
@@ -8515,7 +8635,7 @@ var $gampleman$elm_visualization$Shape$Pie$pie = F2(
 						function (_v2, _v3) {
 							var a = _v2.b;
 							var b = _v3.b;
-							return A2(settings.fu, a, b);
+							return A2(settings.fv, a, b);
 						}))),
 			$elm$core$List$indexedMap($elm$core$Tuple$pair));
 		var dataArray = $elm$core$Array$fromList(data);
@@ -8685,7 +8805,7 @@ var $author$project$Pie$drawChart = F2(
 					bb: config.bb,
 					bf: config.bf,
 					bK: config.bK,
-					fu: F2(
+					fv: F2(
 						function (_v1, _v2) {
 							return 1;
 						})
@@ -8704,7 +8824,7 @@ var $author$project$Pie$drawChart = F2(
 					_List_fromArray(
 						[
 							$elm_community$typed_svg$TypedSvg$Attributes$fill(
-							$elm_community$typed_svg$TypedSvg$Types$Paint(datum.eC))
+							$elm_community$typed_svg$TypedSvg$Types$Paint(datum.eD))
 						]));
 			});
 		var makeLabel = F2(
@@ -8803,7 +8923,7 @@ var $elm$core$Dict$filter = F2(
 	});
 var $author$project$Pie$Data = F3(
 	function (label, data, color) {
-		return {eC: color, aI: data, cg: label};
+		return {eD: color, aI: data, cg: label};
 	});
 var $avh4$elm_color$Color$RgbaSpace = F4(
 	function (a, b, c, d) {
@@ -8831,7 +8951,7 @@ var $elm$core$Result$andThen = F2(
 	});
 var $elm$regex$Regex$Match = F4(
 	function (match, index, number, submatches) {
-		return {eX: index, e2: match, fa: number, fA: submatches};
+		return {eY: index, e3: match, fb: number, fB: submatches};
 	});
 var $elm$regex$Regex$findAtMost = _Regex_findAtMost;
 var $elm$core$String$fromList = _String_fromList;
@@ -8848,7 +8968,7 @@ var $elm$regex$Regex$fromStringWith = _Regex_fromStringWith;
 var $elm$regex$Regex$fromString = function (string) {
 	return A2(
 		$elm$regex$Regex$fromStringWith,
-		{ey: false, e6: false},
+		{ez: false, e7: false},
 		string);
 };
 var $elm$core$List$head = function (list) {
@@ -8989,7 +9109,7 @@ var $noahzgordon$elm_color_extra$Color$Convert$hexToColor = function () {
 					$elm$core$Basics$composeR,
 					$elm$core$Maybe$map(
 						function ($) {
-							return $.fA;
+							return $.fB;
 						}),
 					A2(
 						$elm$core$Basics$composeR,
@@ -9049,21 +9169,30 @@ var $noahzgordon$elm_color_extra$Color$Convert$hexToColor = function () {
 								})))))));
 }();
 var $author$project$Pie$fromRepo = function (repo) {
-	var _v0 = repo.e$;
+	var _v0 = repo.e0;
 	if (_v0.$ === 1) {
-		return A3($author$project$Pie$Data, 'none', repo.fv, $avh4$elm_color$Color$black);
+		return A3($author$project$Pie$Data, 'none', repo.fw, $avh4$elm_color$Color$black);
 	} else {
 		var lang = _v0.a;
-		var _v1 = $noahzgordon$elm_color_extra$Color$Convert$hexToColor(lang.eC);
+		var _v1 = $noahzgordon$elm_color_extra$Color$Convert$hexToColor(lang.eD);
 		if (!_v1.$) {
 			var c = _v1.a;
-			return A3($author$project$Pie$Data, lang.cu, repo.fv, c);
+			return A3($author$project$Pie$Data, lang.cu, repo.fw, c);
 		} else {
-			return A3($author$project$Pie$Data, 'none', repo.fv, $avh4$elm_color$Color$black);
+			return A3($author$project$Pie$Data, 'none', repo.fw, $avh4$elm_color$Color$black);
 		}
 	}
 };
+var $elm$html$Html$img = _VirtualDom_node('img');
 var $elm$core$Basics$neq = _Utils_notEqual;
+var $elm$html$Html$Attributes$src = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'src',
+		_VirtualDom_noJavaScriptOrHtmlUri(url));
+};
+var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $author$project$Pie$view = function (user) {
 	var updateBy = F2(
 		function (d, value) {
@@ -9092,13 +9221,26 @@ var $author$project$Pie$view = function (user) {
 					updateBy(d));
 			},
 			$elm$core$Dict$empty,
-			A2($elm$core$List$map, $author$project$Pie$fromRepo, user.fm)));
+			A2($elm$core$List$map, $author$project$Pie$fromRepo, user.fn)));
 	var config = {bx: 0, bb: 200, bD: 230, bf: 110, bK: 0.02};
 	return A2(
 		$elm$html$Html$div,
-		_List_Nil,
 		_List_fromArray(
 			[
+				$elm$html$Html$Attributes$class('position-relative')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$img,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('avatar position-absolute top-0 bottom-0 right-0 left-0'),
+						A2($elm$html$Html$Attributes$style, 'margin', 'auto'),
+						A2($elm$html$Html$Attributes$style, 'width', '10em'),
+						$elm$html$Html$Attributes$src(user.eu)
+					]),
+				_List_Nil),
 				A2(
 				$author$project$Pie$drawChart,
 				config,
@@ -9106,7 +9248,6 @@ var $author$project$Pie$view = function (user) {
 			]));
 };
 var $elm$html$Html$a = _VirtualDom_node('a');
-var $capitalist$elm_octicons$Octicons$defaultOptions = {de: $elm$core$Maybe$Nothing, eC: 'black', bA: 'evenodd', b6: 16, dH: $elm$core$Maybe$Nothing, eb: $elm$core$Maybe$Nothing, c4: 16};
 var $elm$html$Html$Attributes$href = function (url) {
 	return A2(
 		$elm$html$Html$Attributes$stringProperty,
@@ -9114,108 +9255,8 @@ var $elm$html$Html$Attributes$href = function (url) {
 		_VirtualDom_noJavaScriptUri(url));
 };
 var $elm$html$Html$li = _VirtualDom_node('li');
-var $elm$svg$Svg$Attributes$fill = _VirtualDom_attribute('fill');
-var $elm$svg$Svg$Attributes$fillRule = _VirtualDom_attribute('fill-rule');
-var $elm$svg$Svg$Attributes$class = _VirtualDom_attribute('class');
-var $elm$core$List$append = F2(
-	function (xs, ys) {
-		if (!ys.b) {
-			return xs;
-		} else {
-			return A3($elm$core$List$foldr, $elm$core$List$cons, ys, xs);
-		}
-	});
-var $elm$core$List$concat = function (lists) {
-	return A3($elm$core$List$foldr, $elm$core$List$append, _List_Nil, lists);
-};
-var $elm$svg$Svg$Attributes$height = _VirtualDom_attribute('height');
-var $elm$svg$Svg$Attributes$style = _VirtualDom_attribute('style');
-var $elm$svg$Svg$svg = $elm$svg$Svg$trustedNode('svg');
-var $elm$svg$Svg$Attributes$version = _VirtualDom_attribute('version');
-var $elm$svg$Svg$Attributes$viewBox = _VirtualDom_attribute('viewBox');
-var $elm$svg$Svg$Attributes$width = _VirtualDom_attribute('width');
-var $capitalist$elm_octicons$Octicons$Internal$iconSVG = F5(
-	function (viewBox, name, options, attributes, children) {
-		var style = function () {
-			var _v2 = options.eb;
-			if (_v2.$ === 1) {
-				return _List_Nil;
-			} else {
-				var s = _v2.a;
-				return _List_fromArray(
-					[s]);
-			}
-		}();
-		var margin = function () {
-			var _v1 = options.dH;
-			if (_v1.$ === 1) {
-				return _List_Nil;
-			} else {
-				var m = _v1.a;
-				return _List_fromArray(
-					['margin: ' + m]);
-			}
-		}();
-		var styles = function () {
-			var _v0 = $elm$core$List$concat(
-				_List_fromArray(
-					[style, margin]));
-			if (!_v0.b) {
-				return _List_Nil;
-			} else {
-				var lst = _v0;
-				return _List_fromArray(
-					[
-						$elm$svg$Svg$Attributes$style(
-						A2($elm$core$String$join, ';', lst))
-					]);
-			}
-		}();
-		return A2(
-			$elm$svg$Svg$svg,
-			$elm$core$List$concat(
-				_List_fromArray(
-					[
-						_List_fromArray(
-						[
-							$elm$svg$Svg$Attributes$version('1.1'),
-							$elm$svg$Svg$Attributes$class(
-							A2($elm$core$Maybe$withDefault, 'octicon ' + name, options.de)),
-							$elm$svg$Svg$Attributes$width(
-							$elm$core$String$fromInt(options.c4)),
-							$elm$svg$Svg$Attributes$height(
-							$elm$core$String$fromInt(options.b6)),
-							$elm$svg$Svg$Attributes$viewBox(viewBox)
-						]),
-						attributes,
-						styles
-					])),
-			children);
-	});
-var $capitalist$elm_octicons$Octicons$pathIconWithOptions = F4(
-	function (path, viewBox, octiconName, options) {
-		return A5(
-			$capitalist$elm_octicons$Octicons$Internal$iconSVG,
-			viewBox,
-			octiconName,
-			options,
-			_List_Nil,
-			_List_fromArray(
-				[
-					A2(
-					$elm$svg$Svg$path,
-					_List_fromArray(
-						[
-							$elm$svg$Svg$Attributes$d(path),
-							$elm$svg$Svg$Attributes$fillRule(options.bA),
-							$elm$svg$Svg$Attributes$fill(options.eC)
-						]),
-					_List_Nil)
-				]));
-	});
 var $capitalist$elm_octicons$Octicons$repoPath = 'M4,9 L3,9 L3,8 L4,8 L4,9 L4,9 Z M4,6 L3,6 L3,7 L4,7 L4,6 L4,6 Z M4,4 L3,4 L3,5 L4,5 L4,4 L4,4 Z M4,2 L3,2 L3,3 L4,3 L4,2 L4,2 Z M12,1 L12,13 C12,13.55 11.55,14 11,14 L6,14 L6,16 L4.5,14.5 L3,16 L3,14 L1,14 C0.45,14 0,13.55 0,13 L0,1 C0,0.45 0.45,0 1,0 L11,0 C11.55,0 12,0.45 12,1 L12,1 Z M11,11 L1,11 L1,13 L3,13 L3,12 L6,12 L6,13 L11,13 L11,11 L11,11 Z M11,1 L2,1 L2,10 L11,10 L11,1 L11,1 Z';
 var $capitalist$elm_octicons$Octicons$repo = A3($capitalist$elm_octicons$Octicons$pathIconWithOptions, $capitalist$elm_octicons$Octicons$repoPath, '0 0 12 16', 'repo');
-var $elm$html$Html$span = _VirtualDom_node('span');
 var $elm$svg$Svg$Attributes$points = _VirtualDom_attribute('points');
 var $elm$svg$Svg$polygon = $elm$svg$Svg$trustedNode('polygon');
 var $capitalist$elm_octicons$Octicons$polygonIconWithOptions = F4(
@@ -9234,15 +9275,13 @@ var $capitalist$elm_octicons$Octicons$polygonIconWithOptions = F4(
 						[
 							$elm$svg$Svg$Attributes$points(points),
 							$elm$svg$Svg$Attributes$fillRule(options.bA),
-							$elm$svg$Svg$Attributes$fill(options.eC)
+							$elm$svg$Svg$Attributes$fill(options.eD)
 						]),
 					_List_Nil)
 				]));
 	});
 var $capitalist$elm_octicons$Octicons$starPolygon = '14 6 9.1 5.36 7 1 4.9 5.36 0 6 3.6 9.26 2.67 14 7 11.67 11.33 14 10.4 9.26';
 var $capitalist$elm_octicons$Octicons$star = A3($capitalist$elm_octicons$Octicons$polygonIconWithOptions, $capitalist$elm_octicons$Octicons$starPolygon, '0 0 14 16', 'star');
-var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
-var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$html$Html$ul = _VirtualDom_node('ul');
 var $author$project$Main$viewRepositories = function (user) {
 	var viewRepository = function (repo) {
@@ -9272,7 +9311,7 @@ var $author$project$Main$viewRepositories = function (user) {
 								]),
 							_List_fromArray(
 								[
-									$elm$html$Html$text(user.e1 + ('/' + repo.cu))
+									$elm$html$Html$text(user.e2 + ('/' + repo.cu))
 								]))
 						])),
 					A2(
@@ -9290,7 +9329,7 @@ var $author$project$Main$viewRepositories = function (user) {
 									$elm$html$Html$Attributes$class('mr-2')
 								]),
 							function () {
-								var _v0 = repo.e$;
+								var _v0 = repo.e0;
 								if (_v0.$ === 1) {
 									return _List_Nil;
 								} else {
@@ -9301,13 +9340,11 @@ var $author$project$Main$viewRepositories = function (user) {
 											$elm$html$Html$span,
 											_List_fromArray(
 												[
-													$elm$html$Html$Attributes$class('circle mr-1'),
-													A2($elm$html$Html$Attributes$style, 'background-color', lang.eC),
-													A2($elm$html$Html$Attributes$style, 'top', '1px'),
-													A2($elm$html$Html$Attributes$style, 'position', 'relative'),
+													$elm$html$Html$Attributes$class('circle mr-1 position-relative d-inline-block'),
+													A2($elm$html$Html$Attributes$style, 'background-color', lang.eD),
+													A2($elm$html$Html$Attributes$style, 'top', '2px'),
 													A2($elm$html$Html$Attributes$style, 'width', '1em'),
-													A2($elm$html$Html$Attributes$style, 'height', '1em'),
-													A2($elm$html$Html$Attributes$style, 'display', 'inline-block')
+													A2($elm$html$Html$Attributes$style, 'height', '1em')
 												]),
 											_List_Nil),
 											$elm$html$Html$text(lang.cu)
@@ -9315,7 +9352,7 @@ var $author$project$Main$viewRepositories = function (user) {
 								}
 							}()),
 							$elm$html$Html$text(
-							$elm$core$String$fromInt(repo.fv)),
+							$elm$core$String$fromInt(repo.fw)),
 							$capitalist$elm_octicons$Octicons$star($capitalist$elm_octicons$Octicons$defaultOptions)
 						]))
 				]));
@@ -9331,7 +9368,7 @@ var $author$project$Main$viewRepositories = function (user) {
 				A2(
 				$elm$html$Html$ul,
 				_List_Nil,
-				A2($elm$core$List$map, viewRepository, user.fm))
+				A2($elm$core$List$map, viewRepository, user.fn))
 			]));
 };
 var $author$project$Main$viewUser = function (user) {
@@ -9340,9 +9377,9 @@ var $author$project$Main$viewUser = function (user) {
 			A2(
 				$elm$core$List$map,
 				function ($) {
-					return $.fv;
+					return $.fw;
 				},
-				user.fm)));
+				user.fn)));
 	return A2(
 		$elm$html$Html$div,
 		_List_fromArray(
@@ -9359,7 +9396,7 @@ var $author$project$Main$viewUser = function (user) {
 					]),
 				_List_fromArray(
 					[
-						$elm$html$Html$text(user.e1 + ('\'s points: ' + total))
+						$elm$html$Html$text(user.e2 + ('\'s points: ' + total))
 					])),
 				$author$project$Pie$view(user),
 				$author$project$Main$viewRepositories(user)
@@ -9392,14 +9429,14 @@ var $author$project$Main$viewBody = function (model) {
 };
 var $author$project$Main$view = function (model) {
 	return {
-		ew: _List_fromArray(
+		ex: _List_fromArray(
 			[
 				$author$project$Main$viewBody(model)
 			]),
-		fF: 'Elm GitHub OAuth 2.0 Sample'
+		fG: 'Elm GitHub OAuth 2.0 Sample'
 	};
 };
 var $author$project$Main$main = $elm$browser$Browser$application(
-	{eY: $author$project$Main$init, fc: $author$project$Main$UrlChanged, fd: $author$project$Main$LinkClicked, fB: $author$project$Main$subscriptions, fN: $author$project$Main$update, fO: $author$project$Main$view});
+	{eZ: $author$project$Main$init, fd: $author$project$Main$UrlChanged, fe: $author$project$Main$LinkClicked, fC: $author$project$Main$subscriptions, fO: $author$project$Main$update, fP: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
 	$elm$json$Json$Decode$succeed(0))(0)}});}(this));

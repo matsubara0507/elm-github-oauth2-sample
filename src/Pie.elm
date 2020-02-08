@@ -4,7 +4,8 @@ import Color exposing (Color)
 import Color.Convert exposing (hexToColor)
 import Dict
 import GitHub
-import Html exposing (Html, div)
+import Html exposing (Html, div, img)
+import Html.Attributes exposing (class, src, style)
 import Path
 import Shape exposing (defaultPieConfig)
 import TypedSvg exposing (g, svg, text_)
@@ -60,7 +61,16 @@ view user =
                 |> List.foldl (\d -> Dict.update d.label (updateBy d)) Dict.empty
                 |> Dict.filter (\_ v -> v.data /= 0)
     in
-    div [] [ drawChart config (Dict.values model) ]
+    div [ class "position-relative" ]
+        [ img
+            [ class "avatar position-absolute top-0 bottom-0 right-0 left-0"
+            , style "margin" "auto"
+            , style "width" "10em"
+            , src user.avatar
+            ]
+            []
+        , drawChart config (Dict.values model)
+        ]
 
 
 w : Float

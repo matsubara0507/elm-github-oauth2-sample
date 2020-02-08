@@ -107,11 +107,17 @@ signinButton : Model -> Html Msg
 signinButton _ =
     div [ Attr.class "f3 mt-3" ]
         [ button
-            [ Attr.class "btn btn-large btn-outline-blue mr-2"
+            [ Attr.class "btn btn-large btn-outline-blue mr-2 text-center"
             , Attr.type_ "button"
             , Event.onClick SignIn
             ]
-            [ text "Sign in with GitHub" ]
+            [ text "Sign in with GitHub"
+            , span [ Attr.class "ml-2" ]
+                [ Octicons.defaultOptions
+                    |> Octicons.size 22
+                    |> Octicons.markGithub
+                ]
+            ]
         ]
 
 
@@ -149,13 +155,11 @@ viewRepositories user =
 
                             Just lang ->
                                 [ span
-                                    [ Attr.class "circle mr-1"
+                                    [ Attr.class "circle mr-1 position-relative d-inline-block"
                                     , Attr.style "background-color" lang.color
-                                    , Attr.style "top" "1px"
-                                    , Attr.style "position" "relative"
+                                    , Attr.style "top" "2px"
                                     , Attr.style "width" "1em"
                                     , Attr.style "height" "1em"
-                                    , Attr.style "display" "inline-block"
                                     ]
                                     []
                                 , text lang.name
