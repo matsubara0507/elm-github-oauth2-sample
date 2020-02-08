@@ -21,7 +21,6 @@ const provider = new firebase.auth.GithubAuthProvider();
 
 app.ports.signIn.subscribe(_ => {
   firebase.auth().signInWithPopup(provider).then(function(result) {
-    console.log(result.user)
     app.ports.signedIn.send(result);
   }).catch(function(error) {
     app.ports.failSignIn.send(error)

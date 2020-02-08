@@ -2,13 +2,15 @@ module Main exposing (main)
 
 import Browser
 import Browser.Navigation as Nav
+import Debug
 import Firebase
 import GitHub
-import Html exposing (Html, button, div, text)
+import Html exposing (Html, a, button, div, h3, li, text, ul)
 import Html.Attributes as Attr
 import Html.Events as Event
 import Http
 import Json.Decode as Json
+import Octicons
 import Url exposing (Url)
 
 
@@ -88,11 +90,14 @@ view model =
 viewBody : Model -> Html Msg
 viewBody model =
     Html.div [ Attr.class "position-relative text-center" ]
-        [ case model.user of
-            Just user ->
-                text ("Hi " ++ user.login)
+        [ case ( model.error, model.user ) of
+            ( Just err, _ ) ->
+                text err
 
-            Nothing ->
+            ( _, Just user ) ->
+                viewUser user
+
+            _ ->
                 signinButton model
         ]
 
@@ -106,6 +111,42 @@ signinButton _ =
             , Event.onClick SignIn
             ]
             [ text "Sign in with GitHub" ]
+        ]
+
+
+viewUser : GitHub.User -> Html msg
+viewUser user =
+    let
+        total =
+            List.map .star user.repos
+                |> List.sum
+                |> String.fromInt
+    in
+    div [ Attr.class "col-4 my-3 mx-auto" ]
+        [ h3 [ Attr.class "my-2" ]
+            [ text (user.login ++ "'s points: " ++ total) ]
+        , viewRepositories user
+        ]
+
+
+viewRepositories : GitHub.User -> Html msg
+viewRepositories user =
+    let
+        viewRepository repo =
+            li [ Attr.class "Box-row mb-3" ]
+                [ div [ Attr.class "float-left" ]
+                    [ Octicons.repo Octicons.defaultOptions
+                    , a [ Attr.href repo.url, Attr.class "ml-1" ]
+                        [ text (user.login ++ "/" ++ repo.name) ]
+                    ]
+                , div [ Attr.class "float-right" ]
+                    [ text (String.fromInt repo.star)
+                    , Octicons.star Octicons.defaultOptions
+                    ]
+                ]
+    in
+    div [ Attr.class "Box" ]
+        [ ul [] (List.map viewRepository user.repos)
         ]
 
 
