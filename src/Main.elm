@@ -5,12 +5,13 @@ import Browser.Navigation as Nav
 import Debug
 import Firebase
 import GitHub
-import Html exposing (Html, a, button, div, h3, li, text, ul)
+import Html exposing (Html, a, button, div, h3, li, span, text, ul)
 import Html.Attributes as Attr
 import Html.Events as Event
 import Http
 import Json.Decode as Json
 import Octicons
+import Pie
 import Url exposing (Url)
 
 
@@ -122,9 +123,10 @@ viewUser user =
                 |> List.sum
                 |> String.fromInt
     in
-    div [ Attr.class "col-4 my-3 mx-auto" ]
+    div [ Attr.class "container-sm my-3" ]
         [ h3 [ Attr.class "my-2" ]
             [ text (user.login ++ "'s points: " ++ total) ]
+        , Pie.view user
         , viewRepositories user
         ]
 
@@ -140,7 +142,25 @@ viewRepositories user =
                         [ text (user.login ++ "/" ++ repo.name) ]
                     ]
                 , div [ Attr.class "float-right" ]
-                    [ text (String.fromInt repo.star)
+                    [ span [ Attr.class "mr-2" ] <|
+                        case repo.language of
+                            Nothing ->
+                                []
+
+                            Just lang ->
+                                [ span
+                                    [ Attr.class "circle mr-1"
+                                    , Attr.style "background-color" lang.color
+                                    , Attr.style "top" "1px"
+                                    , Attr.style "position" "relative"
+                                    , Attr.style "width" "1em"
+                                    , Attr.style "height" "1em"
+                                    , Attr.style "display" "inline-block"
+                                    ]
+                                    []
+                                , text lang.name
+                                ]
+                    , text (String.fromInt repo.star)
                     , Octicons.star Octicons.defaultOptions
                     ]
                 ]
