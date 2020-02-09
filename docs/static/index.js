@@ -20,8 +20,14 @@ firebase.initializeApp(firebaseConfig);
 const provider = new firebase.auth.GithubAuthProvider();
 
 app.ports.signIn.subscribe(_ => {
-  firebase.auth().signInWithPopup(provider).then(function(result) {
-    app.ports.signedIn.send(result);
+  firebase.auth().signInWithRedirect(provider);
+});
+
+app.ports.getSignInResult.subscribe(_ => {
+  firebase.auth().getRedirectResult().then(function(result) {
+    if (result.credential) {
+      app.ports.signedIn.send(result);
+    }
   }).catch(function(error) {
     app.ports.failSignIn.send(error)
   });

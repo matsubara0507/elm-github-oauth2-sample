@@ -40,13 +40,12 @@ type Msg
     | UrlChanged Url
     | SignIn
     | SignedIn (Result Json.Error GitHub.Token)
-    | FailSignIn (Result Json.Error String)
     | FetchUser (Result Http.Error GitHub.User)
 
 
 init : () -> Url -> Nav.Key -> ( Model, Cmd Msg )
 init _ _ key =
-    ( Model Nothing Nothing Nothing key, Cmd.none )
+    ( Model Nothing Nothing Nothing key, Firebase.getSignInResult () )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -68,12 +67,6 @@ update msg model =
             ( { model | token = Just token, error = Nothing }, GitHub.getUserInfo FetchUser token )
 
         SignedIn (Err err) ->
-            ( { model | error = Just (Json.errorToString err) }, Cmd.none )
-
-        FailSignIn (Ok err) ->
-            ( { model | error = Just err }, Cmd.none )
-
-        FailSignIn (Err err) ->
             ( { model | error = Just (Json.errorToString err) }, Cmd.none )
 
         FetchUser (Ok user) ->
@@ -104,12 +97,19 @@ viewBody model =
 
 
 signinButton : Model -> Html Msg
-signinButton _ =
+signinButton model =
     div [ Attr.class "f3 mt-3" ]
         [ button
-            [ Attr.class "btn btn-large btn-outline-blue mr-2 text-center"
+            [ Attr.class "btn btn-large mr-2"
             , Attr.type_ "button"
             , Event.onClick SignIn
+            , Attr.attribute "aria-disabled" <|
+                case model.token of
+                    Just _ ->
+                        "true"
+
+                    Nothing ->
+                        "false"
             ]
             [ text "Sign in with GitHub"
             , span [ Attr.class "ml-2" ]
@@ -176,7 +176,4 @@ viewRepositories user =
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-    Sub.batch
-        [ Firebase.signedInWithDecode SignedIn
-        , Firebase.failSignInWithDecode FailSignIn
-        ]
+    Firebase.signedInWithDecode SignedIn

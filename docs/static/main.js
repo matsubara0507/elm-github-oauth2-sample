@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.cW.bd === region.dl.bd)
+	if (region.cW.bd === region.dm.bd)
 	{
 		return 'on line ' + region.cW.bd;
 	}
-	return 'on lines ' + region.cW.bd + ' through ' + region.dl.bd;
+	return 'on lines ' + region.cW.bd + ' through ' + region.dm.bd;
 }
 
 
@@ -2704,7 +2704,7 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		aj: func(record.aj),
+		ai: func(record.ai),
 		cX: record.cX,
 		cI: record.cI
 	}
@@ -2974,7 +2974,7 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.aj;
+		var message = !tag ? value : tag < 3 ? value.a : value.ai;
 		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.cX;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
@@ -4059,9 +4059,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.dX === next.dX
-							&& curr.ds === next.ds
-							&& curr.dT.a === next.dT.a
+							&& curr.dY === next.dY
+							&& curr.dt === next.dt
+							&& curr.dU.a === next.dU.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4232,11 +4232,11 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		d5: _Browser_getScene(),
+		d6: _Browser_getScene(),
 		ek: {
 			en: _Browser_window.pageXOffset,
 			ep: _Browser_window.pageYOffset,
-			c4: _Browser_doc.documentElement.clientWidth,
+			c5: _Browser_doc.documentElement.clientWidth,
 			b6: _Browser_doc.documentElement.clientHeight
 		}
 	};
@@ -4247,7 +4247,7 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		c4: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		c5: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
 		b6: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
@@ -4271,14 +4271,14 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			d5: {
-				c4: node.scrollWidth,
+			d6: {
+				c5: node.scrollWidth,
 				b6: node.scrollHeight
 			},
 			ek: {
 				en: node.scrollLeft,
 				ep: node.scrollTop,
-				c4: node.clientWidth,
+				c5: node.clientWidth,
 				b6: node.clientHeight
 			}
 		};
@@ -4309,17 +4309,17 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			d5: _Browser_getScene(),
+			d6: _Browser_getScene(),
 			ek: {
 				en: x,
 				ep: y,
-				c4: _Browser_doc.documentElement.clientWidth,
+				c5: _Browser_doc.documentElement.clientWidth,
 				b6: _Browser_doc.documentElement.clientHeight
 			},
 			eK: {
 				en: x + rect.left,
 				ep: y + rect.top,
-				c4: rect.width,
+				c5: rect.width,
 				b6: rect.height
 			}
 		};
@@ -4520,14 +4520,14 @@ function _Http_track(router, xhr, tracker)
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Sending({
 			fu: event.loaded,
-			d8: event.total
+			d9: event.total
 		}))));
 	});
 	xhr.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Receiving({
 			fk: event.loaded,
-			d8: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
+			d9: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
 		}))));
 	});
 }
@@ -5178,7 +5178,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {dr: fragment, ds: host, dR: path, dT: port_, dX: protocol, dY: query};
+		return {ds: fragment, dt: host, dS: path, dU: port_, dY: protocol, dZ: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5459,45 +5459,36 @@ var $elm$core$Task$perform = F2(
 var $elm$browser$Browser$application = _Browser_application;
 var $author$project$Main$Model = F4(
 	function (token, user, error, key) {
-		return {ah: error, dB: key, ef: token, c2: user};
+		return {aK: error, dC: key, c_: token, c3: user};
 	});
-var $elm$core$Platform$Cmd$batch = _Platform_batch;
-var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
+var $elm$json$Json$Encode$null = _Json_encodeNull;
+var $author$project$Firebase$getSignInResult = _Platform_outgoingPort(
+	'getSignInResult',
+	function ($) {
+		return $elm$json$Json$Encode$null;
+	});
 var $author$project$Main$init = F3(
 	function (_v0, _v1, key) {
 		return _Utils_Tuple2(
 			A4($author$project$Main$Model, $elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing, key),
-			$elm$core$Platform$Cmd$none);
+			$author$project$Firebase$getSignInResult(0));
 	});
-var $author$project$Main$FailSignIn = function (a) {
-	return {$: 4, a: a};
-};
 var $author$project$Main$SignedIn = function (a) {
 	return {$: 3, a: a};
 };
-var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Basics$composeL = F3(
 	function (g, f, x) {
 		return g(
 			f(x));
 	});
 var $elm$json$Json$Decode$decodeValue = _Json_run;
-var $elm$json$Json$Decode$value = _Json_decodeValue;
-var $author$project$Firebase$failSignIn = _Platform_incomingPort('failSignIn', $elm$json$Json$Decode$value);
-var $elm$json$Json$Decode$string = _Json_decodeString;
-var $author$project$Firebase$failSignInWithDecode = function (msg) {
-	return $author$project$Firebase$failSignIn(
-		A2(
-			$elm$core$Basics$composeL,
-			msg,
-			$elm$json$Json$Decode$decodeValue($elm$json$Json$Decode$string)));
-};
 var $elm$json$Json$Decode$field = _Json_decodeField;
 var $elm$json$Json$Decode$at = F2(
 	function (fields, decoder) {
 		return A3($elm$core$List$foldr, $elm$json$Json$Decode$field, decoder, fields);
 	});
 var $author$project$GitHub$Token = $elm$core$Basics$identity;
+var $elm$json$Json$Decode$string = _Json_decodeString;
 var $author$project$GitHub$tokenDecoder = A2($elm$json$Json$Decode$map, $elm$core$Basics$identity, $elm$json$Json$Decode$string);
 var $author$project$Firebase$decoder = A2(
 	$elm$json$Json$Decode$map,
@@ -5507,6 +5498,7 @@ var $author$project$Firebase$decoder = A2(
 		_List_fromArray(
 			['credential', 'accessToken']),
 		$author$project$GitHub$tokenDecoder));
+var $elm$json$Json$Decode$value = _Json_decodeValue;
 var $author$project$Firebase$signedIn = _Platform_incomingPort('signedIn', $elm$json$Json$Decode$value);
 var $author$project$Firebase$signedInWithDecode = function (msg) {
 	return $author$project$Firebase$signedIn(
@@ -5516,15 +5508,10 @@ var $author$project$Firebase$signedInWithDecode = function (msg) {
 			$elm$json$Json$Decode$decodeValue($author$project$Firebase$decoder)));
 };
 var $author$project$Main$subscriptions = function (_v0) {
-	return $elm$core$Platform$Sub$batch(
-		_List_fromArray(
-			[
-				$author$project$Firebase$signedInWithDecode($author$project$Main$SignedIn),
-				$author$project$Firebase$failSignInWithDecode($author$project$Main$FailSignIn)
-			]));
+	return $author$project$Firebase$signedInWithDecode($author$project$Main$SignedIn);
 };
 var $author$project$Main$FetchUser = function (a) {
-	return {$: 5, a: a};
+	return {$: 4, a: a};
 };
 var $elm$json$Json$Decode$decodeString = _Json_runOnString;
 var $elm$http$Http$BadStatus_ = F2(
@@ -6169,7 +6156,7 @@ var $elm$http$Http$Request = function (a) {
 };
 var $elm$http$Http$State = F2(
 	function (reqs, subs) {
-		return {d_: reqs, ec: subs};
+		return {d$: reqs, ed: subs};
 	});
 var $elm$http$Http$init = $elm$core$Task$succeed(
 	A2($elm$http$Http$State, $elm$core$Dict$empty, _List_Nil));
@@ -6243,7 +6230,7 @@ var $elm$http$Http$onEffects = F4(
 				return $elm$core$Task$succeed(
 					A2($elm$http$Http$State, reqs, subs));
 			},
-			A3($elm$http$Http$updateReqs, router, cmds, state.d_));
+			A3($elm$http$Http$updateReqs, router, cmds, state.d$));
 	});
 var $elm$core$List$maybeCons = F3(
 	function (f, mx, xs) {
@@ -6286,7 +6273,7 @@ var $elm$http$Http$onSelfMsg = F3(
 				A2(
 					$elm$core$List$filterMap,
 					A3($elm$http$Http$maybeSend, router, tracker, progress),
-					state.ec)));
+					state.ed)));
 	});
 var $elm$http$Http$Cancel = function (a) {
 	return {$: 0, a: a};
@@ -6422,8 +6409,9 @@ var $author$project$GitHub$getUserInfo = F2(
 			});
 	});
 var $elm$browser$Browser$Navigation$load = _Browser_load;
+var $elm$core$Platform$Cmd$batch = _Platform_batch;
+var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
-var $elm$json$Json$Encode$null = _Json_encodeNull;
 var $author$project$Firebase$signIn = _Platform_outgoingPort(
 	'signIn',
 	function ($) {
@@ -6451,7 +6439,7 @@ var $elm$url$Url$addPrefixed = F3(
 	});
 var $elm$url$Url$toString = function (url) {
 	var http = function () {
-		var _v0 = url.dX;
+		var _v0 = url.dY;
 		if (!_v0) {
 			return 'http://';
 		} else {
@@ -6461,17 +6449,17 @@ var $elm$url$Url$toString = function (url) {
 	return A3(
 		$elm$url$Url$addPrefixed,
 		'#',
-		url.dr,
+		url.ds,
 		A3(
 			$elm$url$Url$addPrefixed,
 			'?',
-			url.dY,
+			url.dZ,
 			_Utils_ap(
 				A2(
 					$elm$url$Url$addPort,
-					url.dT,
-					_Utils_ap(http, url.ds)),
-				url.dR)));
+					url.dU,
+					_Utils_ap(http, url.dt)),
+				url.dS)));
 };
 var $author$project$Main$update = F2(
 	function (msg, model) {
@@ -6483,7 +6471,7 @@ var $author$project$Main$update = F2(
 						model,
 						A2(
 							$elm$browser$Browser$Navigation$pushUrl,
-							model.dB,
+							model.dC,
 							$elm$url$Url$toString(url)));
 				} else {
 					var href = msg.a.a;
@@ -6504,8 +6492,8 @@ var $author$project$Main$update = F2(
 						_Utils_update(
 							model,
 							{
-								ah: $elm$core$Maybe$Nothing,
-								ef: $elm$core$Maybe$Just(token)
+								aK: $elm$core$Maybe$Nothing,
+								c_: $elm$core$Maybe$Just(token)
 							}),
 						A2($author$project$GitHub$getUserInfo, $author$project$Main$FetchUser, token));
 				} else {
@@ -6514,28 +6502,7 @@ var $author$project$Main$update = F2(
 						_Utils_update(
 							model,
 							{
-								ah: $elm$core$Maybe$Just(
-									$elm$json$Json$Decode$errorToString(err))
-							}),
-						$elm$core$Platform$Cmd$none);
-				}
-			case 4:
-				if (!msg.a.$) {
-					var err = msg.a.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{
-								ah: $elm$core$Maybe$Just(err)
-							}),
-						$elm$core$Platform$Cmd$none);
-				} else {
-					var err = msg.a.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{
-								ah: $elm$core$Maybe$Just(
+								aK: $elm$core$Maybe$Just(
 									$elm$json$Json$Decode$errorToString(err))
 							}),
 						$elm$core$Platform$Cmd$none);
@@ -6547,8 +6514,8 @@ var $author$project$Main$update = F2(
 						_Utils_update(
 							model,
 							{
-								ah: $elm$core$Maybe$Nothing,
-								c2: $elm$core$Maybe$Just(user)
+								aK: $elm$core$Maybe$Nothing,
+								c3: $elm$core$Maybe$Just(user)
 							}),
 						$elm$core$Platform$Cmd$none);
 				} else {
@@ -6556,7 +6523,7 @@ var $author$project$Main$update = F2(
 						_Utils_update(
 							model,
 							{
-								ah: $elm$core$Maybe$Just('fetch github user error')
+								aK: $elm$core$Maybe$Just('fetch github user error')
 							}),
 						$elm$core$Platform$Cmd$none);
 				}
@@ -6572,8 +6539,16 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $author$project$Main$SignIn = {$: 2};
+var $elm$virtual_dom$VirtualDom$attribute = F2(
+	function (key, value) {
+		return A2(
+			_VirtualDom_attribute,
+			_VirtualDom_noOnOrFormAction(key),
+			_VirtualDom_noJavaScriptOrHtmlUri(value));
+	});
+var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
 var $elm$html$Html$button = _VirtualDom_node('button');
-var $capitalist$elm_octicons$Octicons$defaultOptions = {de: $elm$core$Maybe$Nothing, eD: 'black', bA: 'evenodd', b6: 16, dH: $elm$core$Maybe$Nothing, eb: $elm$core$Maybe$Nothing, c4: 16};
+var $capitalist$elm_octicons$Octicons$defaultOptions = {df: $elm$core$Maybe$Nothing, eD: 'black', bA: 'evenodd', b6: 16, dI: $elm$core$Maybe$Nothing, ec: $elm$core$Maybe$Nothing, c5: 16};
 var $capitalist$elm_octicons$Octicons$markGithubPath = 'M8,0 C3.58,0 0,3.58 0,8 C0,11.54 2.29,14.53 5.47,15.59 C5.87,15.66 6.02,15.42 6.02,15.21 C6.02,15.02 6.01,14.39 6.01,13.72 C4,14.09 3.48,13.23 3.32,12.78 C3.23,12.55 2.84,11.84 2.5,11.65 C2.22,11.5 1.82,11.13 2.49,11.12 C3.12,11.11 3.57,11.7 3.72,11.94 C4.44,13.15 5.59,12.81 6.05,12.6 C6.12,12.08 6.33,11.73 6.56,11.53 C4.78,11.33 2.92,10.64 2.92,7.58 C2.92,6.71 3.23,5.99 3.74,5.43 C3.66,5.23 3.38,4.41 3.82,3.31 C3.82,3.31 4.49,3.1 6.02,4.13 C6.66,3.95 7.34,3.86 8.02,3.86 C8.7,3.86 9.38,3.95 10.02,4.13 C11.55,3.09 12.22,3.31 12.22,3.31 C12.66,4.41 12.38,5.23 12.3,5.43 C12.81,5.99 13.12,6.7 13.12,7.58 C13.12,10.65 11.25,11.33 9.47,11.53 C9.76,11.78 10.01,12.26 10.01,13.01 C10.01,14.08 10,14.94 10,15.21 C10,15.42 10.15,15.67 10.55,15.59 C13.71,14.53 16,11.53 16,8 C16,3.58 12.42,0 8,0 L8,0 Z';
 var $elm$svg$Svg$Attributes$d = _VirtualDom_attribute('d');
 var $elm$svg$Svg$Attributes$fill = _VirtualDom_attribute('fill');
@@ -6609,7 +6584,7 @@ var $elm$core$Maybe$withDefault = F2(
 var $capitalist$elm_octicons$Octicons$Internal$iconSVG = F5(
 	function (viewBox, name, options, attributes, children) {
 		var style = function () {
-			var _v2 = options.eb;
+			var _v2 = options.ec;
 			if (_v2.$ === 1) {
 				return _List_Nil;
 			} else {
@@ -6619,7 +6594,7 @@ var $capitalist$elm_octicons$Octicons$Internal$iconSVG = F5(
 			}
 		}();
 		var margin = function () {
-			var _v1 = options.dH;
+			var _v1 = options.dI;
 			if (_v1.$ === 1) {
 				return _List_Nil;
 			} else {
@@ -6652,9 +6627,9 @@ var $capitalist$elm_octicons$Octicons$Internal$iconSVG = F5(
 						[
 							$elm$svg$Svg$Attributes$version('1.1'),
 							$elm$svg$Svg$Attributes$class(
-							A2($elm$core$Maybe$withDefault, 'octicon ' + name, options.de)),
+							A2($elm$core$Maybe$withDefault, 'octicon ' + name, options.df)),
 							$elm$svg$Svg$Attributes$width(
-							$elm$core$String$fromInt(options.c4)),
+							$elm$core$String$fromInt(options.c5)),
 							$elm$svg$Svg$Attributes$height(
 							$elm$core$String$fromInt(options.b6)),
 							$elm$svg$Svg$Attributes$viewBox(viewBox)
@@ -6708,13 +6683,13 @@ var $capitalist$elm_octicons$Octicons$size = F2(
 	function (value, options) {
 		return _Utils_update(
 			options,
-			{b6: value, c4: value});
+			{b6: value, c5: value});
 	});
 var $elm$html$Html$span = _VirtualDom_node('span');
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
-var $author$project$Main$signinButton = function (_v0) {
+var $author$project$Main$signinButton = function (model) {
 	return A2(
 		$elm$html$Html$div,
 		_List_fromArray(
@@ -6727,9 +6702,20 @@ var $author$project$Main$signinButton = function (_v0) {
 				$elm$html$Html$button,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class('btn btn-large btn-outline-blue mr-2 text-center'),
+						$elm$html$Html$Attributes$class('btn btn-large mr-2'),
 						$elm$html$Html$Attributes$type_('button'),
-						$elm$html$Html$Events$onClick($author$project$Main$SignIn)
+						$elm$html$Html$Events$onClick($author$project$Main$SignIn),
+						A2(
+						$elm$html$Html$Attributes$attribute,
+						'aria-disabled',
+						function () {
+							var _v0 = model.c_;
+							if (!_v0.$) {
+								return 'true';
+							} else {
+								return 'false';
+							}
+						}())
 					]),
 				_List_fromArray(
 					[
@@ -6998,8 +6984,8 @@ var $folkertdev$one_true_path_experiment$SubPath$with = F2(
 	function (moveto, drawtos) {
 		return $folkertdev$one_true_path_experiment$SubPath$SubPath(
 			{
-				dj: $folkertdev$elm_deque$Deque$fromList(drawtos),
-				dM: moveto
+				dk: $folkertdev$elm_deque$Deque$fromList(drawtos),
+				dN: moveto
 			});
 	});
 var $gampleman$elm_visualization$Shape$Pie$arc_ = F6(
@@ -7029,7 +7015,7 @@ var $gampleman$elm_visualization$Shape$Pie$arc_ = F6(
 									{
 									bU: $folkertdev$one_true_path_experiment$LowLevel$Command$largestArc,
 									b1: cw,
-									ao: _Utils_Tuple2(r, r),
+									an: _Utils_Tuple2(r, r),
 									I: _Utils_Tuple2(x - dx, y - dy),
 									ad: 0
 								}
@@ -7040,7 +7026,7 @@ var $gampleman$elm_visualization$Shape$Pie$arc_ = F6(
 									{
 									bU: $folkertdev$one_true_path_experiment$LowLevel$Command$largestArc,
 									b1: cw,
-									ao: _Utils_Tuple2(r, r),
+									an: _Utils_Tuple2(r, r),
 									I: _Utils_Tuple2(x0_, y0_),
 									ad: 0
 								}
@@ -7060,7 +7046,7 @@ var $gampleman$elm_visualization$Shape$Pie$arc_ = F6(
 									bU: $gampleman$elm_visualization$Shape$Pie$boolToArc(
 										_Utils_cmp(da_, $elm$core$Basics$pi) > -1),
 									b1: cw,
-									ao: _Utils_Tuple2(r, r),
+									an: _Utils_Tuple2(r, r),
 									I: _Utils_Tuple2(
 										x + (r * $elm$core$Basics$cos(a1)),
 										y + (r * $elm$core$Basics$sin(a1))),
@@ -7144,8 +7130,8 @@ var $folkertdev$one_true_path_experiment$SubPath$close = function (subpath) {
 	if (subpath.$ === 1) {
 		return $folkertdev$one_true_path_experiment$SubPath$Empty;
 	} else {
-		var moveto = subpath.a.dM;
-		var drawtos = subpath.a.dj;
+		var moveto = subpath.a.dN;
+		var drawtos = subpath.a.dk;
 		var _v1 = $folkertdev$elm_deque$Deque$popBack(drawtos);
 		if ((!_v1.a.$) && (_v1.a.a.$ === 4)) {
 			var _v2 = _v1.a.a;
@@ -7154,14 +7140,14 @@ var $folkertdev$one_true_path_experiment$SubPath$close = function (subpath) {
 		} else {
 			return $folkertdev$one_true_path_experiment$SubPath$SubPath(
 				{
-					dj: A2($folkertdev$elm_deque$Deque$pushBack, $folkertdev$one_true_path_experiment$LowLevel$Command$closePath, drawtos),
-					dM: moveto
+					dk: A2($folkertdev$elm_deque$Deque$pushBack, $folkertdev$one_true_path_experiment$LowLevel$Command$closePath, drawtos),
+					dN: moveto
 				});
 		}
 	}
 };
 var $folkertdev$one_true_path_experiment$SubPath$firstPoint = function (_v0) {
-	var moveto = _v0.dM;
+	var moveto = _v0.dN;
 	var p = moveto;
 	return p;
 };
@@ -7199,7 +7185,7 @@ var $folkertdev$one_true_path_experiment$SubPath$pushBack = F2(
 		return _Utils_update(
 			data,
 			{
-				dj: A2($folkertdev$elm_deque$Deque$pushBack, drawto, data.dj)
+				dk: A2($folkertdev$elm_deque$Deque$pushBack, drawto, data.dk)
 			});
 	});
 var $folkertdev$elm_deque$Internal$length = function (deque) {
@@ -7230,7 +7216,7 @@ var $folkertdev$one_true_path_experiment$SubPath$unsafeConcatenate = F2(
 		return _Utils_update(
 			a,
 			{
-				dj: A2($folkertdev$elm_deque$Deque$append, a.dj, b.dj)
+				dk: A2($folkertdev$elm_deque$Deque$append, a.dk, b.dk)
 			});
 	});
 var $folkertdev$one_true_path_experiment$SubPath$connect = function () {
@@ -7431,8 +7417,8 @@ var $folkertdev$one_true_path_experiment$LowLevel$Command$updateCursorState = F2
 		}
 	});
 var $folkertdev$one_true_path_experiment$SubPath$finalCursorState = function (_v0) {
-	var moveto = _v0.dM;
-	var drawtos = _v0.dj;
+	var moveto = _v0.dN;
+	var drawtos = _v0.dk;
 	var _v1 = moveto;
 	var start = _v1;
 	var initial = {j: start, q: $elm$core$Maybe$Nothing, cW: start};
@@ -7521,15 +7507,15 @@ var $folkertdev$one_true_path_experiment$LowLevel$Command$mapCoordinateDrawTo = 
 	});
 var $folkertdev$one_true_path_experiment$SubPath$mapCoordinateInstructions = F2(
 	function (f, _v0) {
-		var moveto = _v0.dM;
-		var drawtos = _v0.dj;
+		var moveto = _v0.dN;
+		var drawtos = _v0.dk;
 		var coordinate = moveto;
 		return {
-			dj: A2(
+			dk: A2(
 				$folkertdev$elm_deque$Deque$map,
 				$folkertdev$one_true_path_experiment$LowLevel$Command$mapCoordinateDrawTo(f),
 				drawtos),
-			dM: f(coordinate)
+			dN: f(coordinate)
 		};
 	});
 var $ianmackenzie$elm_geometry$Vector2d$sum = F2(
@@ -7846,13 +7832,6 @@ var $gampleman$elm_visualization$Shape$Pie$centroid = function (arcData) {
 };
 var $gampleman$elm_visualization$Shape$centroid = $gampleman$elm_visualization$Shape$Pie$centroid;
 var $gampleman$elm_visualization$Shape$defaultPieConfig = {bx: 0, b4: 2 * $elm$core$Basics$pi, bb: 0, bf: 100, bK: 0, cz: 0, fv: $elm$core$Basics$compare, bj: 0, ej: $elm$core$Basics$identity};
-var $elm$virtual_dom$VirtualDom$attribute = F2(
-	function (key, value) {
-		return A2(
-			_VirtualDom_attribute,
-			_VirtualDom_noOnOrFormAction(key),
-			_VirtualDom_noJavaScriptOrHtmlUri(value));
-	});
 var $elm_community$typed_svg$TypedSvg$Core$attribute = $elm$virtual_dom$VirtualDom$attribute;
 var $elm$core$String$fromFloat = _String_fromNumber;
 var $elm_community$typed_svg$TypedSvg$TypesToStrings$lengthToString = function (length) {
@@ -8005,7 +7984,7 @@ var $folkertdev$one_true_path_experiment$SubPath$compress = function (subpath) {
 			_Utils_update(
 				data,
 				{
-					dj: $folkertdev$one_true_path_experiment$SubPath$compressHelper(data.dj)
+					dk: $folkertdev$one_true_path_experiment$SubPath$compressHelper(data.dk)
 				}));
 	}
 };
@@ -8079,15 +8058,15 @@ var $folkertdev$one_true_path_experiment$SubPath$toLowLevel = function (subpath)
 	if (subpath.$ === 1) {
 		return $elm$core$Maybe$Nothing;
 	} else {
-		var moveto = subpath.a.dM;
-		var drawtos = subpath.a.dj;
+		var moveto = subpath.a.dN;
+		var drawtos = subpath.a.dk;
 		return $elm$core$Maybe$Just(
 			{
-				dj: A2(
+				dk: A2(
 					$elm$core$List$map,
 					$folkertdev$one_true_path_experiment$LowLevel$Command$toLowLevelDrawTo,
 					$folkertdev$elm_deque$Deque$toList(drawtos)),
-				dM: $folkertdev$one_true_path_experiment$LowLevel$Command$toLowLevelMoveTo(moveto)
+				dN: $folkertdev$one_true_path_experiment$LowLevel$Command$toLowLevelMoveTo(moveto)
 			});
 	}
 };
@@ -8227,7 +8206,7 @@ var $folkertdev$svg_path_lowlevel$Path$LowLevel$encodeFlags = function (_v0) {
 };
 var $folkertdev$svg_path_lowlevel$Path$LowLevel$stringifyEllipticalArcArgument = F2(
 	function (config, _v0) {
-		var radii = _v0.ao;
+		var radii = _v0.an;
 		var xAxisRotate = _v0.ad;
 		var arcFlag = _v0.bU;
 		var direction = _v0.b1;
@@ -8361,8 +8340,8 @@ var $folkertdev$svg_path_lowlevel$Path$LowLevel$stringifyMoveTo = F2(
 	});
 var $folkertdev$svg_path_lowlevel$Path$LowLevel$toStringSubPath = F2(
 	function (config, _v0) {
-		var moveto = _v0.dM;
-		var drawtos = _v0.dj;
+		var moveto = _v0.dN;
+		var drawtos = _v0.dk;
 		return A2($folkertdev$svg_path_lowlevel$Path$LowLevel$stringifyMoveTo, config, moveto) + (' ' + A2(
 			$elm$core$String$join,
 			' ',
@@ -8813,7 +8792,7 @@ var $author$project$Pie$drawChart = F2(
 			A2(
 				$elm$core$List$map,
 				function ($) {
-					return $.aI;
+					return $.aH;
 				},
 				model));
 		var makeSlice = F2(
@@ -8923,7 +8902,7 @@ var $elm$core$Dict$filter = F2(
 	});
 var $author$project$Pie$Data = F3(
 	function (label, data, color) {
-		return {eD: color, aI: data, cg: label};
+		return {eD: color, aH: data, cg: label};
 	});
 var $avh4$elm_color$Color$RgbaSpace = F4(
 	function (a, b, c, d) {
@@ -9203,14 +9182,14 @@ var $author$project$Pie$view = function (user) {
 				return $elm$core$Maybe$Just(
 					_Utils_update(
 						v,
-						{aI: v.aI + d.aI}));
+						{aH: v.aH + d.aH}));
 			}
 		});
 	var model = A2(
 		$elm$core$Dict$filter,
 		F2(
 			function (_v0, v) {
-				return !(!v.aI);
+				return !(!v.aH);
 			}),
 		A3(
 			$elm$core$List$foldl,
@@ -9412,7 +9391,7 @@ var $author$project$Main$viewBody = function (model) {
 		_List_fromArray(
 			[
 				function () {
-				var _v0 = _Utils_Tuple2(model.ah, model.c2);
+				var _v0 = _Utils_Tuple2(model.aK, model.c3);
 				if (!_v0.a.$) {
 					var err = _v0.a.a;
 					return $elm$html$Html$text(err);
